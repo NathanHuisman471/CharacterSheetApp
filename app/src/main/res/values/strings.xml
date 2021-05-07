@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CharacterSheetApp</string>
+
+    <string name="appTitle">Nathans Pathfinder Character Sheet</string>
+</resources>
