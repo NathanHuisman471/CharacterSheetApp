@@ -7,6 +7,10 @@
     <string name="exampleName">Grombrindal Frosthane</string>
     <string name="enterClass">Select Your Class</string>
     <string name="onward">Onward</string>
+    <string name="buildTitleString">Your Character</string>
+    
+    <string name="raceSelectorLabel">Select A Race</string>
+    <string name="descriptionPlaceholder">Select a race to see its description</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

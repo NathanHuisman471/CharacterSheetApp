@@ -41,13 +41,18 @@ public class MainActivity extends AppCompatActivity {
     //when the sword next button is clicked, grab the chosen class and name and give it to the buildCharacter class
     public void onNextButtonClick(View view){
 
+        String[] saved = {"someone", "anyone"};
+
         int selectedClass = chosenClass.getSelectedItemPosition();
 
-        String playerName = characterName.getText().toString();
-        String playerClass = chosenClass.getItemAtPosition(selectedClass).toString();
+        String playerName = characterName.getText().toString().trim();
+        String playerClass = chosenClass.getItemAtPosition(selectedClass).toString().trim();
+
+        saved[0] = playerName;
+        saved[1] = playerClass;
 
         Intent intent = new Intent(this,buildCharacter.class);
-        intent.putExtra("CHARACTER_NAME", new String[] {playerName, playerClass});
+        intent.putExtra("CHARACTER_NAME", saved);
         startActivity(intent);
     }
 
