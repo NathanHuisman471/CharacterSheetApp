@@ -41,10 +41,31 @@
                 android:id="@+id/raceDescriptionLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/descriptionPlaceholder"
-                android:textSize="16sp"
                 android:maxLines="1"
-                android:onClick="onDescriptionClick"/>
+                android:onClick="onDescriptionClick"
+                android:text="@string/descriptionPlaceholder"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/heritageSelector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/heritageSelectorLabel"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/heritageSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/heritageDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/descriptionPlaceholder"
+                android:maxLines="1"
+                android:onClick="onHeritageDescriptionClick"
+                android:textSize="12sp" />
 
         </LinearLayout>
     </ScrollView>
