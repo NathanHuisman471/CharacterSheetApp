@@ -6,4 +6,131 @@
     android:layout_height="match_parent"
     tools:context=".characterDone">
 
+    <TextView
+        android:id="@+id/finalTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="@string/buildTitleString"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/raceView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/descriptionPlaceholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/finalTitle" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="50dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backView">
+
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/strengthLabel"
+                android:layout_width="match_parent"
+                android:layout_height="67dp"
+                android:text="@string/strString" />
+
+            <TextView
+                android:id="@+id/dexterityLabel"
+                android:layout_width="match_parent"
+                android:layout_height="67dp"
+                android:text="@string/dexString" />
+
+            <TextView
+                android:id="@+id/constitutionLabel"
+                android:layout_width="match_parent"
+                android:layout_height="66dp"
+                android:text="@string/conString" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/intellegenceLabel"
+                android:layout_width="match_parent"
+                android:layout_height="67dp"
+                android:text="@string/intString" />
+
+            <TextView
+                android:id="@+id/charismaLabel"
+                android:layout_width="match_parent"
+                android:layout_height="67dp"
+                android:text="@string/chaString" />
+
+            <TextView
+                android:id="@+id/wisdomLabel"
+                android:layout_width="match_parent"
+                android:layout_height="66dp"
+                android:text="@string/wisString" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/heritageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="@string/descriptionPlaceholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/raceView" />
+
+    <TextView
+        android:id="@+id/backView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="@string/descriptionPlaceholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/heritageView" />
+
+    <ImageView
+        android:id="@+id/weaponPic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:contentDescription="@string/chosenWeapon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:srcCompat="@drawable/sword2" />
+
+    <TextView
+        android:id="@+id/weaponLabel2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/descriptionPlaceholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weaponPic" />
 </androidx.constraintlayout.widget.ConstraintLayout>

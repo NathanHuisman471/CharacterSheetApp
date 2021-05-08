@@ -19,6 +19,14 @@
     <string name="duplicateBoosts">You are not allowed to have two of the same ability boosts in the same category</string>
     <string name="keyAbilityString">Key Ability:</string>
 
+    <string name="chosenWeapon">This is your chosen weapon</string>
+    <string name="strString">Strength: </string>
+    <string name="dexString">Dexterity: </string>
+    <string name="conString">Constitution: </string>
+    <string name="wisString">Wisdom: </string>
+    <string name="intString">Intelligence: </string>
+    <string name="chaString">Charisma: </string>
+
 
     <string name="Level1">Level 1</string>
     <string name="action_settings">Settings</string>
