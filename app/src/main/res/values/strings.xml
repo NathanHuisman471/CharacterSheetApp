@@ -8,11 +8,16 @@
     <string name="enterClass">Select Your Class</string>
     <string name="onward">Onward</string>
     <string name="buildTitleString">Your Character</string>
-    
+
     <string name="raceSelectorLabel">Select A Race</string>
     <string name="heritageSelectorLabel">Select A Heritage</string>
     <string name="backgroundSelectorLabel">Select A Background</string>
     <string name="descriptionPlaceholder">Select a race to see its description</string>
+    <string name="weaponSelectorLabel">Select A Weapon</string>
+    <string name="finishCharacter">Finish Character</string>
+    <string name="abilityBoostString">Ability Boosts</string>
+    <string name="duplicateBoosts">You are not allowed to have two of the same ability boosts in the same category</string>
+    <string name="keyAbilityString">Key Ability:</string>
 
 
     <string name="Level1">Level 1</string>

@@ -2,6 +2,7 @@ package com.nathanhuisman.charactersheetapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -9,10 +10,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+
 public class buildCharacter extends AppCompatActivity {
 
     public String buildTitle;
     public String[] nameAndClass;
+
+    public int flawExists = 1;
+    String[] otherThings = {"","","","","","","",""};
 
 //strings
     public String[] races = {"Dwarf", "Elf", "Gnome", "Halfling", "Human"};
@@ -59,15 +64,19 @@ public class buildCharacter extends AppCompatActivity {
     public String [][] boosts = {{"Strength", "Dexterity", "Constitution", "Intelligence", "Charisma", "Wisdom"}, {"Strength"}, {"Dexterity"}, {"Constitution"}, {"Intelligence"}, {"Charisma"}, {"Wisdom"}};
     public String [][] backgroundBoosts = {{"Strength", "Dexterity"},{"Dexterity","Charisma"},{"Constitution","Charisma"},{"Strength","Charisma"},{"Strength","Constitution"}};
 
+    public String [] weapons = {"Long Sword (1d8s)", "Short Bow (1d6p, range:60)"};
+
     public int selectedRace;
     public int selectedHeritage;
     public int selectedBackground;
+    public int selectedWeapon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_build_character);
 
+        TextView error = findViewById(R.id.errorLabel);
         TextView title = findViewById(R.id.buildTitle);
 
         //grab the sent name and class
@@ -76,6 +85,11 @@ public class buildCharacter extends AppCompatActivity {
         //build string containing the sent name and class and set it to the title
         buildTitle = nameAndClass[0] + " the " + nameAndClass[1];
         title.setText(buildTitle);
+        otherThings[0] = nameAndClass[0];
+        otherThings[1] = nameAndClass[1];
+
+        //made error message invisible until an error occurs
+        error.setVisibility(View.GONE);
 
         //create local instances of all the spinners
         Spinner racesSpinner = findViewById(R.id.raceSelector);
@@ -91,10 +105,36 @@ public class buildCharacter extends AppCompatActivity {
         Spinner freeBoost2 = findViewById(R.id.freeBoost2);
         Spinner freeBoost3 = findViewById(R.id.freeBoost3);
         Spinner freeBoost4 = findViewById(R.id.freeBoost4);
+        Spinner weaponsSpinner = findViewById(R.id.weaponSpinner);
+        Spinner keyAbilitySpinner = findViewById(R.id.keyAbilitySpinner);
         //and all the textViews
         TextView description = findViewById(R.id.raceDescriptionLabel);
         TextView heritageDescription = findViewById(R.id.heritageDescription);
         TextView backDescription = findViewById(R.id.backgroundDescription);
+
+        //set key attributes
+        switch (nameAndClass[1]) {
+            case "Barbarian": {//"Barbarian", "Champion", "Fighter", "Ranger", "Rouge"
+                ArrayAdapter<String> adapter13 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[1]);
+                adapter13.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                keyAbilitySpinner.setAdapter(adapter13);
+                break;
+            }
+            case "Champion":
+            case "Fighter":
+            case "Ranger": {
+                ArrayAdapter<String> adapter13 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, backgroundBoosts[0]);
+                adapter13.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                keyAbilitySpinner.setAdapter(adapter13);
+                break;
+            }
+            case "Rouge": {
+                ArrayAdapter<String> adapter13 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[2]);
+                adapter13.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                keyAbilitySpinner.setAdapter(adapter13);
+                break;
+            }
+        }
 
         //set intitial values for all the drop downs
         //set initial values for races
@@ -128,6 +168,10 @@ public class buildCharacter extends AppCompatActivity {
         adapter11.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         freeBoost4.setAdapter(adapter11);
 
+        ArrayAdapter<String> adapter15 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, weapons);
+        adapter15.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        weaponsSpinner.setAdapter(adapter15);
+
 
 
         //matches up the race description to the race and also lets the heritage spinner know what heritages are available
@@ -136,12 +180,14 @@ public class buildCharacter extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 selectedRace = racesSpinner.getSelectedItemPosition();
                 description.setText(raceDescriptions[selectedRace]);
+                otherThings[2] = racesSpinner.getSelectedItem().toString();
 
                 ArrayAdapter<String> adapter2 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, heritages[selectedRace]);
                 adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 heritageSpinner.setAdapter(adapter2);
 
                 if(selectedRace == 0) {
+                    flawExists = 0;
                     raceBoost3.setVisibility(View.VISIBLE);
                     raceflaw1.setVisibility(View.VISIBLE);
 
@@ -162,6 +208,7 @@ public class buildCharacter extends AppCompatActivity {
                     raceflaw1.setAdapter(adapter52);
                 }
                 else if(selectedRace == 1){
+                    flawExists = 0;
                     raceBoost3.setVisibility(View.VISIBLE);
                     raceflaw1.setVisibility(View.VISIBLE);
 
@@ -182,6 +229,7 @@ public class buildCharacter extends AppCompatActivity {
                     raceflaw1.setAdapter(adapter52);
                 }
                 else if(selectedRace == 2){
+                    flawExists = 0;
                     raceBoost3.setVisibility(View.VISIBLE);
                     raceflaw1.setVisibility(View.VISIBLE);
 
@@ -202,7 +250,7 @@ public class buildCharacter extends AppCompatActivity {
                     raceflaw1.setAdapter(adapter52);
                 }
                 else if(selectedRace == 3){
-
+                    flawExists = 0;
                     raceBoost3.setVisibility(View.VISIBLE);
                     raceflaw1.setVisibility(View.VISIBLE);
 
@@ -242,6 +290,7 @@ public class buildCharacter extends AppCompatActivity {
 
                     raceBoost3.setVisibility(View.GONE);
                     raceflaw1.setVisibility(View.GONE);
+                    flawExists = 0;
                 }
             }
             @Override
@@ -253,18 +302,18 @@ public class buildCharacter extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedHeritage = heritageSpinner.getSelectedItemPosition();
                 heritageDescription.setText(heritagesDescriptions[selectedRace][selectedHeritage]);
+                otherThings[3] = heritageSpinner.getSelectedItem().toString();
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }
         });
-
-
 
         backSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedBackground = backSpinner.getSelectedItemPosition();
                 backDescription.setText(backgroundDescriptions[selectedBackground]);
+                otherThings[4] = backSpinner.getSelectedItem().toString();
 
                 ArrayAdapter<String> adapter6 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, backgroundBoosts[selectedBackground]);
                 adapter6.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -278,13 +327,24 @@ public class buildCharacter extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) { }
         });
+
+        weaponsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedWeapon = weaponsSpinner.getSelectedItemPosition();
+                otherThings[5] = weaponsSpinner.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) { }
+        });
     }
 
 
     public void onDescriptionClick(View view){
         TextView descriptionText = findViewById(R.id.raceDescriptionLabel);
         if(descriptionText.getMaxLines() == 1) {
-            descriptionText.setMaxLines(10);
+            descriptionText.setMaxLines(15);
         } else {
             descriptionText.setMaxLines(1);
         }
@@ -293,7 +353,7 @@ public class buildCharacter extends AppCompatActivity {
     public void onHeritageDescriptionClick(View view){
         TextView descriptionText = findViewById(R.id.heritageDescription);
         if(descriptionText.getMaxLines() == 1) {
-            descriptionText.setMaxLines(10);
+            descriptionText.setMaxLines(15);
         } else {
             descriptionText.setMaxLines(1);
         }
@@ -302,10 +362,103 @@ public class buildCharacter extends AppCompatActivity {
     public void onBackgroundDescriptionClick(View view){
         TextView descriptionText = findViewById(R.id.backgroundDescription);
         if(descriptionText.getMaxLines() == 1) {
-            descriptionText.setMaxLines(10);
+            descriptionText.setMaxLines(15);
         } else {
             descriptionText.setMaxLines(1);
         }
+    }
+
+    public void onFinishCharacterClick(View view){
+
+        int error = 0;
+
+        //check if any error exist
+        Spinner race1 = findViewById(R.id.raceBoost1);
+        Spinner race2 = findViewById(R.id.raceBoost2);
+        Spinner race3 = findViewById(R.id.raceBoost3);
+        Spinner key = findViewById(R.id.keyAbilitySpinner);
+        Spinner flaw = findViewById(R.id.raceFlaw1);
+
+        if(race1.getSelectedItem().toString().equals(race2.getSelectedItem().toString()) ||
+                race1.getSelectedItem().toString().equals(race3.getSelectedItem().toString()) ||
+                race2.getSelectedItem().toString().equals(race3.getSelectedItem().toString()) ){
+            error =1;
+        }
+
+        Spinner back1 = findViewById(R.id.backBoost1);
+        Spinner back2 = findViewById(R.id.backBoost2);
+        if(back1.getSelectedItem().toString().equals(back2.getSelectedItem().toString())){
+            error = 1;
+        }
+
+        Spinner free1 = findViewById(R.id.freeBoost1);
+        Spinner free2 = findViewById(R.id.freeBoost2);
+        Spinner free3 = findViewById(R.id.freeBoost3);
+        Spinner free4 = findViewById(R.id.freeBoost4);
+
+        if(free1.getSelectedItem().toString().equals(free2.getSelectedItem().toString()) ||
+                free1.getSelectedItem().toString().equals(free3.getSelectedItem().toString()) ||
+                free1.getSelectedItem().toString().equals(free4.getSelectedItem().toString()) ||
+                free2.getSelectedItem().toString().equals(free3.getSelectedItem().toString()) ||
+                free2.getSelectedItem().toString().equals(free4.getSelectedItem().toString()) ||
+                free3.getSelectedItem().toString().equals(free4.getSelectedItem().toString()) ){
+            error =1;
+        }
+
+        if(error != 1){
+            int[] howMany = new int[10];
+
+            howMany[0] = race1.getSelectedItemPosition();
+            howMany[1] = race2.getSelectedItemPosition();
+            howMany[3] = key.getSelectedItemPosition();
+            howMany[4] = back1.getSelectedItemPosition();
+            howMany[5] = back2.getSelectedItemPosition();
+            howMany[6] = free1.getSelectedItemPosition();
+            howMany[7] = free2.getSelectedItemPosition();
+            howMany[8] = free3.getSelectedItemPosition();
+            howMany[9] = free4.getSelectedItemPosition();
+
+            int[] each = new int[6];
+
+            if(flawExists == 1){
+                howMany[2] = race3.getSelectedItemPosition();
+                each[flaw.getSelectedItemPosition()] -=1;
+            } else {
+                howMany[2] = -1;
+            }
+
+            for(int i = 0; i<=9; i++){
+                if(howMany[i] == 0){
+                    each[0]++;
+                }
+                else if(howMany[i] == 1){
+                    each[1]++;
+                }
+                else if(howMany[i] == 2){
+                    each[2]++;
+                }
+                else if(howMany[i] == 3){
+                    each[3]++;
+                }
+                else if(howMany[i] == 4){
+                    each[4]++;
+                }
+                else if(howMany[i] == 5){
+                    each[5]++;
+                }
+            }
+
+            Intent intent = new Intent(this,characterDone.class);
+            intent.putExtra("CHARACTER_INFO", each);
+            intent.putExtra("MORE_INFO", otherThings);
+            startActivity(intent);
+
+        }
+        else {
+            TextView errorLabel = findViewById(R.id.errorLabel);
+            errorLabel.setVisibility(View.VISIBLE);
+        }
+
     }
 
 }

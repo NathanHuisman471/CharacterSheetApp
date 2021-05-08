@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_grey"
     tools:context=".buildCharacter">
 
     <ScrollView
@@ -29,7 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/raceSelectorLabel"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:background="@color/brown_grey"/>
 
             <Spinner
                 android:id="@+id/raceSelector"
@@ -80,14 +82,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
+
             </LinearLayout>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="10dp"
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/heritageSelector"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/heritageSelectorLabel"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:background="@color/brown_grey"/>
 
             <Spinner
                 android:id="@+id/heritageSpinner"
@@ -103,11 +112,18 @@
                 android:text="@string/descriptionPlaceholder"
                 android:textSize="12sp" />
 
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="10dp"
+                android:layout_weight="1" />
+
             <TextView
                 android:id="@+id/backgroundLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/backgroundSelectorLabel" />
+                android:text="@string/backgroundSelectorLabel"
+                android:textSize="16sp"
+                android:background="@color/brown_grey"/>
 
             <Spinner
                 android:id="@+id/backgroundSpinner"
@@ -120,7 +136,8 @@
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:onClick="onBackgroundDescriptionClick"
-                android:text="@string/descriptionPlaceholder" />
+                android:text="@string/descriptionPlaceholder"
+                android:textSize="12sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -142,7 +159,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="15dp" />
+                android:layout_height="20dp" />
 
             <TextView
                 android:id="@+id/Level1Label"
@@ -150,7 +167,17 @@
                 android:layout_height="wrap_content"
                 android:text="@string/Level1"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:background="@color/light_brown"/>
+
+            <TextView
+                android:id="@+id/abilityBoostLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/abilityBoostString"
+                android:textSize="16sp"
+                android:background="@color/brown_grey"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -188,7 +215,34 @@
                     android:layout_weight="1" />
 
             </LinearLayout>
+            <TextView
+                android:id="@+id/weaponLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/weaponSelectorLabel"
+                android:textSize="16sp"
+                android:background="@color/brown_grey"/>
 
+            <Spinner
+                android:id="@+id/weaponSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/toCharacterSheet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blue"
+                android:onClick="onFinishCharacterClick"
+                android:text="@string/finishCharacter" />
+
+            <TextView
+                android:id="@+id/errorLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/duplicateBoosts"
+                android:textColor="#cc3300"
+                android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>
 
@@ -198,9 +252,32 @@
         android:layout_height="wrap_content"
         android:text="@string/buildTitleString"
         android:textSize="28sp"
+        android:background="@color/blue"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.493" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/buildTitle"
+        app:layout_constraintStart_toStartOf="@+id/buildTitle"
+        app:layout_constraintTop_toBottomOf="@+id/buildTitle">
+
+        <TextView
+            android:id="@+id/keyAbilityLabel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/keyAbilityString" />
+
+        <Spinner
+            android:id="@+id/keyAbilitySpinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
