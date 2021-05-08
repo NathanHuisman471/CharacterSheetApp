@@ -14,6 +14,7 @@ public class buildCharacter extends AppCompatActivity {
     public String buildTitle;
     public String[] nameAndClass;
 
+//strings
     public String[] races = {"Dwarf", "Elf", "Gnome", "Halfling", "Human"};
     public String[][] heritages = {{"Ancient-Blooded Dwarf", "Anvil Dwarf", "Death Warden Dwarf", "Elemental Heart Dwarf"},
                                     {"Ancient Elf", "Woodland Elf"},
@@ -47,8 +48,20 @@ public class buildCharacter extends AppCompatActivity {
                                                 "Humanitys versatility and ambition have fueled its ascendance to be the most common ancestry in most nations throughout the world. Select a general feat of your choice for which you meet the prerequisites (as with your ancestry feat, you can select this general feat at any point during character creation).",
                                                 "The power of winter flows through you. This heritage is most common among the Jadwiga of Irrisen, due to their descent from Baba Yaga, and certain Erutaki touched by the spirits. You gain cold resistance equal to half your level (minimum 1), and you treat environmental cold effects as if they were one step less extreme (incredible cold becomes extreme, extreme cold becomes severe, and so on)."}};
 
+    public String[] background = {"Acrobat" , "Bandit", "Barkeep", "Gladiator", "Prisoner"};
+
+    public String[] backgroundDescriptions = {"In a circus or on the streets, you earned your pay by performing as an acrobat. You might have turned to adventuring when the money dried up, or simply decided to put your skills to better use.\n" + "\n" + "Choose two ability boosts. One must be to Strength or Dexterity, and one is a free ability boost.",
+                                                "Your past includes no small amount of rural banditry, robbing travelers on the road and scraping by. Whether your robbery was sanctioned by a local noble or you did so of your own accord, you eventually got caught up in the adventuring life. Now, adventure is your stock and trade, and years of camping and skirmishing have only helped.\n" + "\n" + "Choose two ability boosts. One must be to Dexterity or Charisma, and one is a free ability boost.",
+                                                "You have five specialties: hefting barrels, drinking, polishing steins, drinking, and drinking. You worked in a bar, where you learned how to hold your liquor and rowdily socialize.\n" + "\n" + "Choose two ability boosts. One must be to Constitution or Charisma, and one is a free ability boost.",
+                                                "The bloody games of the arena taught you the art of combat. Before you attained true fame, you departed—or escaped—the arena to explore the world. Your skill at drawing both blood and a crowd’s attention pay off in a new adventuring life.\n" + "\n" + "Choose two ability boosts. One must be to Strength or Charisma, and one is a free ability boost.",
+                                                "You might have been imprisoned for crimes (whether you were guilty or not), or enslaved for some part of your upbringing. In your adventuring life, you take full advantage of your newfound freedom.\n" + "\n" + "Choose two ability boosts. One must be to Strength or Constitution, and one is a free ability boost."};
+
+    public String [][] boosts = {{"Strength", "Dexterity", "Constitution", "Intelligence", "Charisma", "Wisdom"}, {"Strength"}, {"Dexterity"}, {"Constitution"}, {"Intelligence"}, {"Charisma"}, {"Wisdom"}};
+    public String [][] backgroundBoosts = {{"Strength", "Dexterity"},{"Dexterity","Charisma"},{"Constitution","Charisma"},{"Strength","Charisma"},{"Strength","Constitution"}};
+
     public int selectedRace;
     public int selectedHeritage;
+    public int selectedBackground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,18 +77,56 @@ public class buildCharacter extends AppCompatActivity {
         buildTitle = nameAndClass[0] + " the " + nameAndClass[1];
         title.setText(buildTitle);
 
+        //create local instances of all the spinners
         Spinner racesSpinner = findViewById(R.id.raceSelector);
         Spinner heritageSpinner = findViewById(R.id.heritageSpinner);
+        Spinner backSpinner = findViewById(R.id.backgroundSpinner);
+        Spinner raceBoost1 = findViewById(R.id.raceBoost1);
+        Spinner raceBoost2 = findViewById(R.id.raceBoost2);
+        Spinner raceBoost3 = findViewById(R.id.raceBoost3);
+        Spinner raceflaw1  = findViewById(R.id.raceFlaw1 );
+        Spinner backBoost1 = findViewById(R.id.backBoost1);
+        Spinner backBoost2 = findViewById(R.id.backBoost2);
+        Spinner freeBoost1 = findViewById(R.id.freeBoost1);
+        Spinner freeBoost2 = findViewById(R.id.freeBoost2);
+        Spinner freeBoost3 = findViewById(R.id.freeBoost3);
+        Spinner freeBoost4 = findViewById(R.id.freeBoost4);
+        //and all the textViews
         TextView description = findViewById(R.id.raceDescriptionLabel);
         TextView heritageDescription = findViewById(R.id.heritageDescription);
+        TextView backDescription = findViewById(R.id.backgroundDescription);
 
-
+        //set intitial values for all the drop downs
         //set initial values for races
         ArrayAdapter<String> adapter = new ArrayAdapter<>(buildCharacter.this,
                 android.R.layout.simple_spinner_item, races);
 
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         racesSpinner.setAdapter(adapter);
+
+        //set initial values for the backgrounds
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<>(buildCharacter.this,
+                android.R.layout.simple_spinner_item, background);
+
+        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        backSpinner.setAdapter(adapter3);
+
+        ArrayAdapter<String> adapter8 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[0]);
+        adapter8.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        freeBoost1.setAdapter(adapter8);
+
+        ArrayAdapter<String> adapter9 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[0]);
+        adapter9.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        freeBoost2.setAdapter(adapter9);
+
+        ArrayAdapter<String> adapter10 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[0]);
+        adapter10.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        freeBoost3.setAdapter(adapter10);
+
+        ArrayAdapter<String> adapter11 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[0]);
+        adapter11.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        freeBoost4.setAdapter(adapter11);
 
 
 
@@ -86,11 +137,112 @@ public class buildCharacter extends AppCompatActivity {
                 selectedRace = racesSpinner.getSelectedItemPosition();
                 description.setText(raceDescriptions[selectedRace]);
 
-                ArrayAdapter<String> adapter2 = new ArrayAdapter<>(buildCharacter.this,
-                        android.R.layout.simple_spinner_item, heritages[selectedRace]);
-
+                ArrayAdapter<String> adapter2 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, heritages[selectedRace]);
                 adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 heritageSpinner.setAdapter(adapter2);
+
+                if(selectedRace == 0) {
+                    raceBoost3.setVisibility(View.VISIBLE);
+                    raceflaw1.setVisibility(View.VISIBLE);
+
+                    ArrayAdapter<String> adapter4 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[3]);//"Strength", "Dexterity", "Constitution", "Intelligence", "Charisma", "Wisdom"
+                    adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    raceBoost1.setAdapter(adapter4);
+
+                    ArrayAdapter<String> adapter5 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[6]);
+                    adapter5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    raceBoost2.setAdapter(adapter5);
+
+                    ArrayAdapter<String> adapter51 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[0]);
+                    adapter51.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    raceBoost3.setAdapter(adapter51);
+
+                    ArrayAdapter<String> adapter52 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[5]);
+                    adapter52.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    raceflaw1.setAdapter(adapter52);
+                }
+                else if(selectedRace == 1){
+                    raceBoost3.setVisibility(View.VISIBLE);
+                    raceflaw1.setVisibility(View.VISIBLE);
+
+                    ArrayAdapter<String> adapter4 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[2]);//"Strength", "Dexterity", "Constitution", "Intelligence", "Charisma", "Wisdom"
+                    adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    raceBoost1.setAdapter(adapter4);
+
+                    ArrayAdapter<String> adapter5 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[4]);
+                    adapter5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    raceBoost2.setAdapter(adapter5);
+
+                    ArrayAdapter<String> adapter51 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[0]);
+                    adapter51.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    raceBoost3.setAdapter(adapter51);
+
+                    ArrayAdapter<String> adapter52 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[3]);
+                    adapter52.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    raceflaw1.setAdapter(adapter52);
+                }
+                else if(selectedRace == 2){
+                    raceBoost3.setVisibility(View.VISIBLE);
+                    raceflaw1.setVisibility(View.VISIBLE);
+
+                    ArrayAdapter<String> adapter4 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[3]);//"Strength", "Dexterity", "Constitution", "Intelligence", "Charisma", "Wisdom"
+                    adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    raceBoost1.setAdapter(adapter4);
+
+                    ArrayAdapter<String> adapter5 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[5]);
+                    adapter5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    raceBoost2.setAdapter(adapter5);
+
+                    ArrayAdapter<String> adapter51 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[0]);
+                    adapter51.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    raceBoost3.setAdapter(adapter51);
+
+                    ArrayAdapter<String> adapter52 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[1]);
+                    adapter52.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    raceflaw1.setAdapter(adapter52);
+                }
+                else if(selectedRace == 3){
+
+                    raceBoost3.setVisibility(View.VISIBLE);
+                    raceflaw1.setVisibility(View.VISIBLE);
+
+                    ArrayAdapter<String> adapter4 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[2]);//"Strength", "Dexterity", "Constitution", "Intelligence", "Charisma", "Wisdom"
+                    adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    raceBoost1.setAdapter(adapter4);
+
+                    ArrayAdapter<String> adapter5 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[6]);
+                    adapter5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    raceBoost2.setAdapter(adapter5);
+
+                    ArrayAdapter<String> adapter51 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[0]);
+                    adapter51.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    raceBoost3.setAdapter(adapter51);
+
+                    ArrayAdapter<String> adapter52 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[1]);
+                    adapter52.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    raceflaw1.setAdapter(adapter52);
+
+                }
+                else if(selectedRace == 4){
+                    ArrayAdapter<String> adapter4 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[0]);//"Strength", "Dexterity", "Constitution", "Intelligence", "Charisma", "Wisdom"
+                    adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    raceBoost1.setAdapter(adapter4);
+
+                    ArrayAdapter<String> adapter5 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[0]);
+                    adapter5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    raceBoost2.setAdapter(adapter5);
+
+                    ArrayAdapter<String> adapter51 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[0]);
+                    adapter51.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    raceBoost3.setAdapter(adapter51);
+
+                    ArrayAdapter<String> adapter52 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[0]);
+                    adapter52.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    raceflaw1.setAdapter(adapter52);
+
+                    raceBoost3.setVisibility(View.GONE);
+                    raceflaw1.setVisibility(View.GONE);
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parentView) { }
@@ -102,11 +254,29 @@ public class buildCharacter extends AppCompatActivity {
                 selectedHeritage = heritageSpinner.getSelectedItemPosition();
                 heritageDescription.setText(heritagesDescriptions[selectedRace][selectedHeritage]);
             }
-
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onNothingSelected(AdapterView<?> adapterView) { }
+        });
+
+
+
+        backSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedBackground = backSpinner.getSelectedItemPosition();
+                backDescription.setText(backgroundDescriptions[selectedBackground]);
+
+                ArrayAdapter<String> adapter6 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, backgroundBoosts[selectedBackground]);
+                adapter6.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                backBoost1.setAdapter(adapter6);
+
+                ArrayAdapter<String> adapter7 = new ArrayAdapter<>(buildCharacter.this, android.R.layout.simple_spinner_item, boosts[0]);
+                adapter7.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                backBoost2.setAdapter(adapter7);
 
             }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) { }
         });
     }
 
@@ -122,6 +292,15 @@ public class buildCharacter extends AppCompatActivity {
 
     public void onHeritageDescriptionClick(View view){
         TextView descriptionText = findViewById(R.id.heritageDescription);
+        if(descriptionText.getMaxLines() == 1) {
+            descriptionText.setMaxLines(10);
+        } else {
+            descriptionText.setMaxLines(1);
+        }
+    }
+
+    public void onBackgroundDescriptionClick(View view){
+        TextView descriptionText = findViewById(R.id.backgroundDescription);
         if(descriptionText.getMaxLines() == 1) {
             descriptionText.setMaxLines(10);
         } else {

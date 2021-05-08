@@ -11,7 +11,10 @@
     
     <string name="raceSelectorLabel">Select A Race</string>
     <string name="heritageSelectorLabel">Select A Heritage</string>
+    <string name="backgroundSelectorLabel">Select A Background</string>
     <string name="descriptionPlaceholder">Select a race to see its description</string>
 
+
+    <string name="Level1">Level 1</string>
     <string name="action_settings">Settings</string>
 </resources>
